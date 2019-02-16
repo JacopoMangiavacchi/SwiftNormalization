@@ -13,21 +13,21 @@ public func minimumMaximum<T: Comparable>(_ vector: [T]) -> (minimum: T, maximum
     // if 'vector' has an odd number of items, let 'minimum' or 'maximum' deal with the leftover
     let start = vector.count % 2 // 1 if odd, skipping the first element
     for i in stride(from: start, to: vector.count, by: 2) {
-        let pair = (vector[i], vector[i+1])
+        let (first, second) = (vector[i], vector[i+1])
 
-        if pair.0 > pair.1 {
-            if pair.0 > maximum {
-                maximum = pair.0
+        if first > second {
+            if first > maximum {
+                maximum = first
             }
-            if pair.1 < minimum {
-                minimum = pair.1
+            if second < minimum {
+                minimum = second
             }
         } else {
-            if pair.1 > maximum {
-                maximum = pair.1
+            if second > maximum {
+                maximum = second
             }
-            if pair.0 < minimum {
-                minimum = pair.0
+            if first < minimum {
+                minimum = first
             }
         }
     }
