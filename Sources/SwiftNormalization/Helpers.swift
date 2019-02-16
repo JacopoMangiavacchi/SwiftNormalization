@@ -1,7 +1,7 @@
 import Foundation
 
 /**
- Find Min and Max value from a Vector.
+ Find Min and Max value of a Vector.
 
  - Parameter array: The one dimension array.
  - Returns: The tuple of Min and Max value.
@@ -36,12 +36,12 @@ public func minimumMaximum<T: Comparable>(_ vector: [T]) -> (minimum: T, maximum
 }
 
 /**
- Get STD - Standard Deviation from a Vector
+ Get STD - Standard Deviation - of a Vector
 
  - Parameter vector: The floating point one dimension array.
  - Returns: The standard deviation value.
  */
-public func standardDeviation<T: BinaryFloatingPoint>(vector : [T]) -> T
+public func std<T: BinaryFloatingPoint>(_ vector : [T]) -> T
 {
     let length = T(vector.count)
     let avg = vector.reduce(0, +) / length

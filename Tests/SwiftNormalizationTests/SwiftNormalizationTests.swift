@@ -66,6 +66,22 @@ final class SwiftNormalizationTests: XCTestCase {
         XCTAssertEqual(normalizedArray, expectedNormalizedArray)
     }
 
+    func testZScoreFloat() {
+        let array: [Float] = [1,2,3,4,5]
+        let expectedNormalizedArray: [Float] = [-0.8973665, 0.102633476, 1.1026335, 2.1026335, 3.1026335]
+        let normalizedArray = ZScoreNormalized(array)
+
+        XCTAssertEqual(normalizedArray, expectedNormalizedArray)
+    }
+
+    func testZScoreDouble() {
+        let array: [Double] = [1,2,3,4,5]
+        let expectedNormalizedArray: [Double] = [-0.8973665961010275, 0.10263340389897246, 1.1026334038989725, 2.1026334038989725, 3.1026334038989725]
+        let normalizedArray = ZScoreNormalized(array)
+
+        XCTAssertEqual(normalizedArray, expectedNormalizedArray)
+    }
+
     static var allTests = [
         ("Test MinMax Float", testMinMaxFloat),
         ("Test MinMax Double", testMinMaxDouble),
@@ -75,5 +91,7 @@ final class SwiftNormalizationTests: XCTestCase {
         ("Test L1 Double", testL1Double),
         ("Test L2 Float", testL2Float),
         ("Test L2 Double", testL2Double),
+        ("Test ZScore Float", testZScoreFloat),
+        ("Test ZScore Double", testZScoreDouble),
     ]
 }

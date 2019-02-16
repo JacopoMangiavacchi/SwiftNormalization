@@ -55,3 +55,17 @@ public func L2Normalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
     let sqrtSumSquared = sqrt(vector.reduce(0, { $0 + ($1 * $1) }))
     return vector.map{ $0 / sqrtSumSquared }
 }
+
+/**
+ ZScore Vector Normalization.
+
+ Formula: x' = (x' - MEAN(X)) / STD(X)
+
+ - Parameter vector: The floating point one dimension array to be normalized.
+ - Returns: The normalized one dimension array.
+ */
+public func ZScoreNormalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
+    let mean = vector.reduce(0, +) / T(vector.count)
+    let standardDeviation = std(vector)
+    return vector.map{ $0 - mean / standardDeviation }
+}
