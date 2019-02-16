@@ -1,11 +1,19 @@
-func minimumMaximum<T: Comparable>(_ array: [T]) -> (minimum: T, maximum: T)? {
-    guard var minimum = array.first else { return nil }
+import Foundation
+
+/**
+ Find Min and Max value from a Vector.
+
+ - Parameter array: The one dimension array.
+ - Returns: The tuple of Min and Max value.
+ */
+public func minimumMaximum<T: Comparable>(_ vector: [T]) -> (minimum: T, maximum: T)? {
+    guard var minimum = vector.first else { return nil }
     var maximum = minimum
 
-    // if 'array' has an odd number of items, let 'minimum' or 'maximum' deal with the leftover
-    let start = array.count % 2 // 1 if odd, skipping the first element
-    for i in stride(from: start, to: array.count, by: 2) {
-        let pair = (array[i], array[i+1])
+    // if 'vector' has an odd number of items, let 'minimum' or 'maximum' deal with the leftover
+    let start = vector.count % 2 // 1 if odd, skipping the first element
+    for i in stride(from: start, to: vector.count, by: 2) {
+        let pair = (vector[i], vector[i+1])
 
         if pair.0 > pair.1 {
             if pair.0 > maximum {
@@ -25,4 +33,26 @@ func minimumMaximum<T: Comparable>(_ array: [T]) -> (minimum: T, maximum: T)? {
     }
 
     return (minimum, maximum)
+}
+
+/**
+ Get STD - Standard Deviation from a Vector
+
+ - Parameter vector: The floating point one dimension array.
+ - Returns: The standard deviation value.
+ */
+public func standardDeviation<T: BinaryFloatingPoint>(vector : [T]) -> T
+{
+    let length = T(vector.count)
+    let avg = vector.reduce(0, +) / length
+    let sumOfSquaredAvgDiff = vector.map { pow($0 - avg, 2.0)}.reduce(0, +)
+    return sqrt(sumOfSquaredAvgDiff / (length - 1))
+}
+
+func sqrt<T : BinaryFloatingPoint>(_ x: T) -> T {
+    return T(sqrt(Double(x)))
+}
+
+func pow<T : BinaryFloatingPoint>(_ x: T, _ y: T) -> T {
+    return T(pow(Double(x), Double(y)))
 }

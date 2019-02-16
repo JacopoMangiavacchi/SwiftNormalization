@@ -9,7 +9,7 @@ import Foundation
  - Parameter vector: The floating point one dimension array to be normalized.
  - Returns: The normalized one dimension array.
  */
-public func minMaxNormalized<T: FloatingPoint>(_ vector : [T]) -> [T] {
+public func minMaxNormalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
     guard let (min, max) = minimumMaximum(vector) else { return vector }
     return vector.map{ ($0 - min) / (max - min) }
 }
@@ -23,7 +23,7 @@ public func minMaxNormalized<T: FloatingPoint>(_ vector : [T]) -> [T] {
  - Parameter vector: The floating point one dimension array to be normalized.
  - Returns: The normalized one dimension array.
  */
-public func maxNormalized<T: FloatingPoint>(_ vector : [T]) -> [T] {
+public func maxNormalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
     guard let (_, max) = minimumMaximum(vector) else { return vector }
     return vector.map{ $0 / max }
 }
@@ -37,7 +37,7 @@ public func maxNormalized<T: FloatingPoint>(_ vector : [T]) -> [T] {
  - Parameter vector: The floating point one dimension array to be normalized.
  - Returns: The normalized one dimension array.
  */
-public func L1Normalized<T: FloatingPoint>(_ vector : [T]) -> [T] {
+public func L1Normalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
     let absSum = abs(vector.reduce(0, +))
     return vector.map{ $0 / absSum }
 }
@@ -51,7 +51,7 @@ public func L1Normalized<T: FloatingPoint>(_ vector : [T]) -> [T] {
  - Parameter vector: The floating point one dimension array to be normalized.
  - Returns: The normalized one dimension array.
  */
-public func L2Normalized<T: FloatingPoint>(_ vector : [T]) -> [T] {
+public func L2Normalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
     let sqrtSumSquared = sqrt(vector.reduce(0, { $0 + ($1 * $1) }))
     return vector.map{ $0 / sqrtSumSquared }
 }
