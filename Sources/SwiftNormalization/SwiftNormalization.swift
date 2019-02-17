@@ -29,6 +29,21 @@ public func maxNormalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
 }
 
 /**
+ Mean Vector Normalization.
+
+ Formula: x' = (x' - mean) / (max - min)
+ Normalized values: -0.5 <= x' <= 0.5
+
+ - Parameter vector: The floating point one dimension array to be normalized.
+ - Returns: The normalized one dimension array.
+ */
+public func meanNormalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
+    guard let (min, max) = minimumMaximum(vector) else { return vector }
+    let mean = vector.reduce(0, +) / T(vector.count)
+    return vector.map{ ($0 - mean) / (max - min) }
+}
+
+/**
  L1 Vector Normalization.
 
  Formula: x' = x' / ABS(SUM(x))
