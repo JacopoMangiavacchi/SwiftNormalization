@@ -1,12 +1,22 @@
 import Foundation
 
 /**
+ Get Mean - Mean average - of a Vector
+
+ - Parameter vector: The floating point one dimension array.
+ - Returns: The mean value.
+ */
+public func mean<T: BinaryFloatingPoint>(_ vector : [T]) -> T {
+    return vector.reduce(0, +) / T(vector.count)
+}
+
+/**
  Find Min and Max value of a Vector.
 
  - Parameter array: The one dimension array.
  - Returns: The tuple of Min and Max value.
  */
-public func minimumMaximum<T: Comparable>(_ vector: [T]) -> (minimum: T, maximum: T)? {
+public func minMax<T: Comparable>(_ vector: [T]) -> (minimum: T, maximum: T)? {
     guard var minimum = vector.first else { return nil }
     var maximum = minimum
 
@@ -36,13 +46,32 @@ public func minimumMaximum<T: Comparable>(_ vector: [T]) -> (minimum: T, maximum
 }
 
 /**
+ Get AbsSum - Absolute Sum - of a Vector
+
+ - Parameter vector: The floating point one dimension array.
+ - Returns: The absolute sum value.
+ */
+public func absSum<T: BinaryFloatingPoint>(_ vector : [T]) -> T {
+    return abs(vector.reduce(0, +))
+}
+
+/**
+ Get SqrtSumSquared - Squared Root Sum Of Square - of a Vector
+
+ - Parameter vector: The floating point one dimension array.
+ - Returns: The squared root sum of square value.
+ */
+public func sqrtSumSquared<T: BinaryFloatingPoint>(_ vector : [T]) -> T {
+    return sqrt(vector.reduce(0, { $0 + ($1 * $1) }))
+}
+
+/**
  Get STD - Standard Deviation - of a Vector
 
  - Parameter vector: The floating point one dimension array.
  - Returns: The standard deviation value.
  */
-public func std<T: BinaryFloatingPoint>(_ vector : [T]) -> T
-{
+public func std<T: BinaryFloatingPoint>(_ vector : [T]) -> T {
     let length = T(vector.count)
     let avg = vector.reduce(0, +) / length
     let sumOfSquaredAvgDiff = vector.map { pow($0 - avg, 2.0)}.reduce(0, +)

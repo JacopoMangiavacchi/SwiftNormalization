@@ -10,7 +10,22 @@ import Foundation
  - Returns: The normalized one dimension array.
  */
 public func minMaxNormalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
-    guard let (min, max) = minimumMaximum(vector) else { return vector }
+    guard let (min, max) = minMax(vector) else { return vector }
+    return minMaxNormalized(vector, min: min, max: max)
+}
+
+/**
+ Min Max Vector Normalization.
+
+ Formula: x' = (x' - min) / (x' - max)
+ Normalized values: 0 <= x' <= 1
+
+ - Parameter vector: The floating point one dimension array to be normalized.
+ - Parameter min: The minimum value of the input vector
+ - Parameter max: The maximum value of the input vector
+ - Returns: The normalized one dimension array.
+ */
+public func minMaxNormalized<T: BinaryFloatingPoint>(_ vector : [T], min: T, max: T) -> [T] {
     return vector.map{ ($0 - min) / (max - min) }
 }
 
@@ -24,7 +39,21 @@ public func minMaxNormalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
  - Returns: The normalized one dimension array.
  */
 public func maxNormalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
-    guard let (_, max) = minimumMaximum(vector) else { return vector }
+    guard let (_, max) = minMax(vector) else { return vector }
+    return maxNormalized(vector, max: max)
+}
+
+/**
+ Max Vector Normalization.
+
+ Formula: x' = x' / max
+ Normalized values: 0 <= x' <= 1
+
+ - Parameter vector: The floating point one dimension array to be normalized.
+ - Parameter max: The maximum value of the input vector
+  - Returns: The normalized one dimension array.
+ */
+public func maxNormalized<T: BinaryFloatingPoint>(_ vector : [T], max: T) -> [T] {
     return vector.map{ $0 / max }
 }
 
@@ -38,8 +67,24 @@ public func maxNormalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
  - Returns: The normalized one dimension array.
  */
 public func meanNormalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
-    guard let (min, max) = minimumMaximum(vector) else { return vector }
-    let mean = vector.reduce(0, +) / T(vector.count)
+    guard let (min, max) = minMax(vector) else { return vector }
+    let meanAverage = mean(vector)
+    return meanNormalized(vector, min: min, max: max, mean: meanAverage)
+}
+
+/**
+ Mean Vector Normalization.
+
+ Formula: x' = (x' - mean) / (max - min)
+ Normalized values: -0.5 <= x' <= 0.5
+
+ - Parameter vector: The floating point one dimension array to be normalized.
+ - Parameter min: The minimum value of the input vector
+ - Parameter max: The maximum value of the input vector
+ - Parameter mean: The mean value of the input vector
+ - Returns: The normalized one dimension array.
+ */
+public func meanNormalized<T: BinaryFloatingPoint>(_ vector : [T], min: T, max: T, mean: T) -> [T] {
     return vector.map{ ($0 - mean) / (max - min) }
 }
 
@@ -53,7 +98,21 @@ public func meanNormalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
  - Returns: The normalized one dimension array.
  */
 public func L1Normalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
-    let absSum = abs(vector.reduce(0, +))
+    let absoluteSum = absSum(vector)
+    return L1Normalized(vector, absSum: absoluteSum)
+}
+
+/**
+ L1 Vector Normalization.
+
+ Formula: x' = x' / ABS(SUM(x))
+ Normalized values: 0 <= x' <= 1
+
+ - Parameter vector: The floating point one dimension array to be normalized.
+ - Parameter absSum: The absolute sum value of the input vector
+ - Returns: The normalized one dimension array.
+ */
+public func L1Normalized<T: BinaryFloatingPoint>(_ vector : [T], absSum: T) -> [T] {
     return vector.map{ $0 / absSum }
 }
 
@@ -67,7 +126,21 @@ public func L1Normalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
  - Returns: The normalized one dimension array.
  */
 public func L2Normalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
-    let sqrtSumSquared = sqrt(vector.reduce(0, { $0 + ($1 * $1) }))
+    let sqrootSumSquared = sqrtSumSquared(vector)
+    return L2Normalized(vector, sqrtSumSquared: sqrootSumSquared)
+}
+
+/**
+ L2 Vector Normalization.
+
+ Formula: x' = x' / SQRT(SUM(x^2))
+ Normalized values: 0 <= x' <= 1
+
+ - Parameter vector: The floating point one dimension array to be normalized.
+ - Parameter sqrtSumSquared: The squared root sum of square value of the input vector
+ - Returns: The normalized one dimension array.
+ */
+public func L2Normalized<T: BinaryFloatingPoint>(_ vector : [T], sqrtSumSquared: T) -> [T] {
     return vector.map{ $0 / sqrtSumSquared }
 }
 
@@ -80,7 +153,21 @@ public func L2Normalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
  - Returns: The normalized one dimension array.
  */
 public func ZScoreNormalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
-    let mean = vector.reduce(0, +) / T(vector.count)
+    let meanAverage = mean(vector)
     let standardDeviation = std(vector)
-    return vector.map{ $0 - mean / standardDeviation }
+    return ZScoreNormalized(vector, mean: meanAverage, std: standardDeviation)
+}
+
+/**
+ ZScore Vector Normalization.
+
+ Formula: x' = (x' - MEAN(X)) / STD(X)
+
+ - Parameter vector: The floating point one dimension array to be normalized.
+ - Parameter mean: The mean value of the input vector
+ - Parameter std: The standard deviation value of the input vector
+ - Returns: The normalized one dimension array.
+ */
+public func ZScoreNormalized<T: BinaryFloatingPoint>(_ vector : [T], mean: T, std: T) -> [T] {
+    return vector.map{ $0 - mean / std }
 }
