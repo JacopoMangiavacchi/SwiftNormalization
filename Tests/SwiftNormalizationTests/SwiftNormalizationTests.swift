@@ -7,9 +7,13 @@ final class SwiftNormalizationTests: XCTestCase {
 
     func testMinMaxFloat() {
         let expectedNormalizedArray: [Float] = [0.0, 0.25, 0.5, 0.75, 1.0]
-        let normalizedArray = minMaxNormalized(floatArray)
+        var minMaxNormalization = MinMaxNormalization<Float>()
+
+        let normalizedArray = minMaxNormalization.normalized(floatArray)
 
         XCTAssertEqual(normalizedArray, expectedNormalizedArray)
+        XCTAssertEqual(minMaxNormalization.normalize(3.5), 0.625)
+        XCTAssertEqual(minMaxNormalization.denormalize(0.625), 3.5)
     }
 
     func testMinMaxDouble() {

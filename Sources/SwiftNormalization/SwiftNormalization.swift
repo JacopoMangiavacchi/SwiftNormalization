@@ -1,38 +1,5 @@
 import Foundation
 
-public protocol Normalization {
-    associatedtype BFPType
-    mutating func normalize(_ vector: [BFPType]) -> [BFPType]
-    func normalize(_ value: BFPType) -> BFPType
-    func deNormalize(_ value: BFPType) -> BFPType
-}
-
-public struct MinMaxNormalization<T: BinaryFloatingPoint> : Normalization {
-    public typealias BFPType = T
-
-    var min: T?
-    var max: T?
-
-    public mutating func normalize(_ vector: [T]) -> [T] {
-        guard let (min, max) = minMax(vector) else { return vector }
-        self.min = min
-        self.max = max
-
-        return vector.map{ ($0 - min) / (max - min) }
-    }
-
-    public func normalize(_ value: BFPType) -> BFPType {
-        guard let min = self.min, let max = self.max else { return value }
-        return (value - min) / (max - min)
-    }
-
-    public func deNormalize(_ value: BFPType) -> BFPType {
-        guard let min = self.min, let max = self.max else { return value }
-        return (value * (max - min)) + min
-    }
-}
-
-
 /**
  Min Max Vector Normalization.
 
