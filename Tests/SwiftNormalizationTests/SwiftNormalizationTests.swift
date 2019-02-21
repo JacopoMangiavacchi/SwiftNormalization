@@ -48,27 +48,26 @@ final class SwiftNormalizationTests: XCTestCase {
         test(normalizer: MeanNormalizer<Double>(), vector: inputVectorDouble, expected: expectedVectorDouble)
     }
 
+    // Test L1 Normalizer
+    func testL1() {
+        let expectedVectorFloat: [Float] = [0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334]
+        let expectedVectorDouble: [Double] = [0.06666666666666667, 0.13333333333333333, 0.2, 0.26666666666666666, 0.3333333333333333]
 
-
-
-
-
-
-
-
-    func testL1Float() {
-        let expectedNormalizedArray: [Float] = [0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334]
-        let normalizedArray = L1Normalized(inputVectorFloat)
-
-        XCTAssertEqual(normalizedArray, expectedNormalizedArray)
+        test(normalizer: L1Normalizer<Float>(), vector: inputVectorFloat, expected: expectedVectorFloat)
+        test(normalizer: L1Normalizer<Double>(), vector: inputVectorDouble, expected: expectedVectorDouble)
     }
 
-    func testL1Double() {
-        let expectedNormalizedArray: [Double] = [0.06666666666666667, 0.13333333333333333, 0.2, 0.26666666666666666, 0.3333333333333333]
-        let normalizedArray = L1Normalized(inputVectorDouble)
 
-        XCTAssertEqual(normalizedArray, expectedNormalizedArray)
-    }
+
+
+
+
+
+
+
+
+
+
 
     func testL2Float() {
         let expectedNormalizedArray: [Float] = [0.13483998, 0.26967996, 0.40451992, 0.5393599, 0.6741999]
@@ -102,9 +101,10 @@ final class SwiftNormalizationTests: XCTestCase {
         ("Test MinMax", testMinMax),
         ("Test Max", testMax),
         ("Test Mean", testMean),
+        ("Test L1", testL1),
 
-        ("Test L1 Float", testL1Float),
-        ("Test L1 Double", testL1Double),
+
+
         ("Test L2 Float", testL2Float),
         ("Test L2 Double", testL2Double),
         ("Test ZScore Float", testZScoreFloat),
