@@ -169,5 +169,5 @@ public func ZScoreNormalized<T: BinaryFloatingPoint>(_ vector : [T]) -> [T] {
  - Returns: The normalized one dimension array.
  */
 public func ZScoreNormalized<T: BinaryFloatingPoint>(_ vector : [T], mean: T, std: T) -> [T] {
-    return vector.map{ $0 - mean / std }
+    return vector.map{ ($0 - mean) / std }
 }
