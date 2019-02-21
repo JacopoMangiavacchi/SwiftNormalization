@@ -39,25 +39,22 @@ final class SwiftNormalizationTests: XCTestCase {
         test(normalizer: MaxNormalizer<Double>(), vector: inputVectorDouble, expected: expectedVectorDouble)
     }
 
+    // Test Mean Normalizer
+    func testMean() {
+        let expectedVectorFloat: [Float] = [-0.5, -0.25, 0.0, 0.25, 0.5]
+        let expectedVectorDouble: [Double] = [-0.5, -0.25, 0.0, 0.25, 0.5]
 
-
-
-
-
-
-    func testMeanFloat() {
-        let expectedNormalizedArray: [Float] = [-0.5, -0.25, 0.0, 0.25, 0.5]
-        let normalizedArray = meanNormalized(inputVectorFloat)
-
-        XCTAssertEqual(normalizedArray, expectedNormalizedArray)
+        test(normalizer: MeanNormalizer<Float>(), vector: inputVectorFloat, expected: expectedVectorFloat)
+        test(normalizer: MeanNormalizer<Double>(), vector: inputVectorDouble, expected: expectedVectorDouble)
     }
 
-    func testMeanDouble() {
-        let expectedNormalizedArray: [Double] = [-0.5, -0.25, 0.0, 0.25, 0.5]
-        let normalizedArray = meanNormalized(inputVectorDouble)
 
-        XCTAssertEqual(normalizedArray, expectedNormalizedArray)
-    }
+
+
+
+
+
+
 
     func testL1Float() {
         let expectedNormalizedArray: [Float] = [0.06666667, 0.13333334, 0.2, 0.26666668, 0.33333334]
@@ -104,9 +101,8 @@ final class SwiftNormalizationTests: XCTestCase {
     static var allTests = [
         ("Test MinMax", testMinMax),
         ("Test Max", testMax),
+        ("Test Mean", testMean),
 
-        ("Test Mean Float", testMeanFloat),
-        ("Test Mean Double", testMeanDouble),
         ("Test L1 Float", testL1Float),
         ("Test L1 Double", testL1Double),
         ("Test L2 Float", testL2Float),
