@@ -1,11 +1,11 @@
 /**
- Normalization protocol.
+ Normalizer protocol.
 
  Methods to normalize a floating point vector and normailize/de-normalize
  single values based on the information calculated during the vector normalization.
  */
-public protocol Normalization {
-    associatedtype BFPType
+public protocol Normalizer {
+    associatedtype VectorType
 
     /**
     Normalized vector method.
@@ -16,7 +16,7 @@ public protocol Normalization {
     - Parameter vector: The floating point one dimension array to be normalized.
     - Returns: The normalized one dimension array.
     */
-    mutating func normalized(_ vector: [BFPType]) -> [BFPType]
+    mutating func normalized(_ vector: [VectorType]) -> [VectorType]
 
     /**
     Normalize value method.
@@ -27,7 +27,7 @@ public protocol Normalization {
     - Parameter value: The floating point value to be normalized.
     - Returns: The normalized value.
     */
-    func normalize(_ value: BFPType) -> BFPType
+    func normalize(_ value: VectorType) -> VectorType
 
     /**
     Denormalize value method.
@@ -38,5 +38,5 @@ public protocol Normalization {
     - Parameter value: The floating point value to be de-normalized.
     - Returns: The de-normalized value.
     */
-    func denormalize(_ value: BFPType) -> BFPType
+    func denormalize(_ value: VectorType) -> VectorType
 }

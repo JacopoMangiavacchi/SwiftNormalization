@@ -1,11 +1,11 @@
 /**
- Min Max Vector Normalization.
+ Min Max Vector Normalizer.
 
  Formula: x' = (x' - min) / (x' - max)
  Normalized values: 0 <= x' <= 1
  */
-public struct MinMaxNormalization<T: BinaryFloatingPoint> : Normalization {
-    public typealias BFPType = T
+public struct MinMaxNormalizer<T: BinaryFloatingPoint> : Normalizer {
+    public typealias VectorType = T
 
     var min: T?
     var max: T?
@@ -36,7 +36,7 @@ public struct MinMaxNormalization<T: BinaryFloatingPoint> : Normalization {
     - Parameter value: The floating point value to be normalized.
     - Returns: The normalized value.
     */
-    public func normalize(_ value: BFPType) -> BFPType {
+    public func normalize(_ value: T) -> T {
         guard let min = self.min, let max = self.max else { return value }
         return (value - min) / (max - min)
     }
@@ -50,7 +50,7 @@ public struct MinMaxNormalization<T: BinaryFloatingPoint> : Normalization {
     - Parameter value: The floating point value to be de-normalized.
     - Returns: The de-normalized value.
     */
-    public func denormalize(_ value: BFPType) -> BFPType {
+    public func denormalize(_ value: T) -> T {
         guard let min = self.min, let max = self.max else { return value }
         return (value * (max - min)) + min
     }

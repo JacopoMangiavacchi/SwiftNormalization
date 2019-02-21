@@ -5,7 +5,7 @@ final class SwiftNormalizationTests: XCTestCase {
     let floatVector: [Float] = [1,2,3,4,5]
     let doubleVector: [Double] = [1,2,3,4,5]
 
-    func testFloat<N: Normalization>(normalizer: N, expected: [Float]) where N.BFPType == Float {
+    func testFloat<N: Normalizer>(normalizer: N, expected: [Float]) where N.VectorType == Float {
         var mutableNormalizer = normalizer
 
         XCTAssertEqual(mutableNormalizer.normalized(floatVector), expected)
@@ -15,12 +15,12 @@ final class SwiftNormalizationTests: XCTestCase {
             XCTAssertEqual(mutableNormalizer.denormalize(expected[i]), floatVector[i])
         }
 
-        let middle = floatVector[1] + floatVector[2] / 2.0
+        let middle = (floatVector[1] + floatVector[2]) / 2.0
         let middleNormalized = mutableNormalizer.normalize(middle)
         XCTAssertEqual(mutableNormalizer.denormalize(middleNormalized), middle)
     }
 
-    func testDouble<N: Normalization>(normalizer: N, expected: [Double]) where N.BFPType == Double {
+    func testDouble<N: Normalizer>(normalizer: N, expected: [Double]) where N.VectorType == Double {
         var mutableNormalizer = normalizer
 
         XCTAssertEqual(mutableNormalizer.normalized(doubleVector), expected)
@@ -30,7 +30,7 @@ final class SwiftNormalizationTests: XCTestCase {
             XCTAssertEqual(mutableNormalizer.denormalize(expected[i]), doubleVector[i])
         }
 
-        let middle = doubleVector[1] + doubleVector[2] / 2.0
+        let middle = (doubleVector[1] + doubleVector[2]) / 2.0
         let middleNormalized = mutableNormalizer.normalize(middle)
         XCTAssertEqual(mutableNormalizer.denormalize(middleNormalized), middle)
     }
@@ -39,21 +39,13 @@ final class SwiftNormalizationTests: XCTestCase {
         let expectedFloat: [Float] = [0.0, 0.25, 0.5, 0.75, 1.0]
         let expectedDouble: [Double] = [0.0, 0.25, 0.5, 0.75, 1.0]
 
-        testFloat(normalizer: MinMaxNormalization<Float>(), expected: expectedFloat)
-        testDouble(normalizer: MinMaxNormalization<Double>(), expected: expectedDouble)
+        testFloat(normalizer: MinMaxNormalizer<Float>(), expected: expectedFloat)
+        testDouble(normalizer: MinMaxNormalizer<Double>(), expected: expectedDouble)
     }
 
 
 
 
-
-
-    func testMinMaxDouble() {
-        let expectedNormalizedArray: [Double] = [0.0, 0.25, 0.5, 0.75, 1.0]
-        let normalizedArray = minMaxNormalized(doubleVector)
-
-        XCTAssertEqual(normalizedArray, expectedNormalizedArray)
-    }
 
     func testMaxFloat() {
         let expectedNormalizedArray: [Float] = [0.2, 0.4, 0.6, 0.8, 1.0]
