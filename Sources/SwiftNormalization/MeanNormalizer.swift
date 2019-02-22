@@ -12,6 +12,29 @@ public struct MeanNormalizer<T: BinaryFloatingPoint> : Normalizer {
     var meanAverage: T?
 
     /**
+    Init the normalizer with no state.
+
+    The state will be detected calling the normalized method.
+    */
+    public init() {
+    }
+
+    /**
+    Init the normalizer with min, max and meanAverage state.
+
+    These state values will be overwritten by a call to the normalized method. 
+
+    - Parameter min: The min floating point value to be used for normalize and denormalize methods.
+    - Parameter max: The max floating point value to be used for normalize and denormalize methods.
+    - Parameter meanAverage: The meanAverage floating point value to be used for normalize and denormalize methods.
+    */
+    public init(min: T, max: T, meanAverage: T) {
+        self.min = min
+        self.max = max
+        self.meanAverage = meanAverage
+    }
+
+    /**
     Normalized vector method.
 
     Normalize a floating point vector saving min, max and mean values of the vector.

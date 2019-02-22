@@ -10,6 +10,25 @@ public struct MaxNormalizer<T: BinaryFloatingPoint> : Normalizer {
     var max: T?
 
     /**
+    Init the normalizer with no state.
+
+    The state will be detected calling the normalized method.
+    */
+    public init() {
+    }
+
+    /**
+    Init the normalizer with max state.
+
+    This state value will be overwritten by a call to the normalized method. 
+
+    - Parameter max: The max floating point value to be used for normalize and denormalize methods.
+    */
+    public init(max: T) {
+        self.max = max
+    }
+
+    /**
     Normalized vector method.
 
     Normalize a floating point vector saving the max value of the vector.

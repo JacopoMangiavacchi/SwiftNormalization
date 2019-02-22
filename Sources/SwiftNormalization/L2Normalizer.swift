@@ -10,6 +10,25 @@ public struct L2Normalizer<T: BinaryFloatingPoint> : Normalizer {
     var sqrootSumSquared: T?
 
     /**
+    Init the normalizer with no state.
+
+    The state will be detected calling the normalized method.
+    */
+    public init() {
+    }
+
+    /**
+    Init the normalizer with sqrootSumSquared state.
+
+    This state value will be overwritten by a call to the normalized method. 
+
+    - Parameter sqrootSumSquared: The sqrootSumSquared floating point value to be used for normalize and denormalize methods.
+    */
+    public init(sqrootSumSquared: T) {
+        self.sqrootSumSquared = sqrootSumSquared
+    }
+
+    /**
     Normalized vector method.
 
     Normalize a floating point vector saving the squared root sum of square value of the vector.

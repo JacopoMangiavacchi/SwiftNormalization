@@ -10,6 +10,25 @@ public struct L1Normalizer<T: BinaryFloatingPoint> : Normalizer {
     var absoluteSum: T?
 
     /**
+    Init the normalizer with no state.
+
+    The state will be detected calling the normalized method.
+    */
+    public init() {
+    }
+
+    /**
+    Init the normalizer with absoluteSum state.
+
+    This state value will be overwritten by a call to the normalized method. 
+
+    - Parameter absoluteSum: The absoluteSum floating point value to be used for normalize and denormalize methods.
+    */
+    public init(absoluteSum: T) {
+        self.absoluteSum = absoluteSum
+    }
+
+    /**
     Normalized vector method.
 
     Normalize a floating point vector saving the absoluteSum value of the vector.
